@@ -16,7 +16,9 @@ namespace CoreCsharp
             //_parseFromString();
             //_stringEquality();
             //_stringEqualityPerformingCompareRules();
-            _funWithStringBuilder();
+            //_funWithStringBuilder();
+            //_patternMatchingSwitch();
+            _secondPatternMatchingSwitch();
 
             Console.ReadLine();
         }
@@ -121,6 +123,74 @@ namespace CoreCsharp
             sb.Replace("2", " Invisible bar");
             Console.WriteLine(sb.ToString());
             Console.WriteLine("sb has {0} chars", sb.Length);
+        }
+
+        private static void _patternMatchingSwitch()
+        {
+            Console.WriteLine("1 [Integer (5)], 2[String (\"Hi\")], 3[Decimal (2.5)]");
+            Console.WriteLine("Please choose an option: ");
+            string userChoice = Console.ReadLine();
+
+            object choice;
+
+            //standard pattern matching
+            switch (userChoice)
+            {
+                case "1":
+                    choice = 5;
+                    break;
+                case "2":
+                    choice = "Hi";
+                    break;
+                case "3":
+                    choice = "2.5";
+                    break;
+                default:
+                    break;
+            }
+
+            //switch (choice)
+            //{
+            //    case int i:
+            //        Console.WriteLine("Your choice is an {0}", i);
+            //        break;
+            //    case string s:
+            //        Console.WriteLine("Your choice is a string");
+            //        break;
+            //    case decimal d:
+            //        Console.WriteLine("Your choice is a decimal");
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            Console.WriteLine();
+        }
+
+
+        private static void _secondPatternMatchingSwitch()
+        {
+            Console.WriteLine("1 [C#], 2 [VB]");
+            Console.WriteLine("Pick your favorite language");
+
+            object langChoice = Console.ReadLine();
+            var choice = int.TryParse(langChoice.ToString(), out int c) ? c : langChoice;
+
+            switch (choice)
+            {
+                case int i when i == 2:
+                case string s when s.Equals("VB", StringComparison.OrdinalIgnoreCase):
+                    Console.WriteLine("VB, OOP, multithreading and more!");
+                    break;
+                case int i when i == 1:
+                case string s when s.Equals("C#", StringComparison.OrdinalIgnoreCase):
+                    Console.WriteLine("C#, is a fine language");
+                    break;
+                default:
+                    Console.WriteLine("Well, good luck!");
+                    break;
+            }
+            Console.WriteLine();
         }
     }
 }
