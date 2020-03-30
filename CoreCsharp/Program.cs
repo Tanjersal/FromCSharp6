@@ -18,7 +18,14 @@ namespace CoreCsharp
             //_stringEqualityPerformingCompareRules();
             //_funWithStringBuilder();
             //_patternMatchingSwitch();
-            _secondPatternMatchingSwitch();
+            //_secondPatternMatchingSwitch();
+            //_simpleArrays();
+            //_implicitTypedArrays();
+            //_arrayOfObjects();
+            //_passByValue();
+            //_passByOutParameter();
+            //_passByReference();
+            _returnRefToLocal();
 
             Console.ReadLine();
         }
@@ -167,7 +174,6 @@ namespace CoreCsharp
             Console.WriteLine();
         }
 
-
         private static void _secondPatternMatchingSwitch()
         {
             Console.WriteLine("1 [C#], 2 [VB]");
@@ -192,5 +198,150 @@ namespace CoreCsharp
             }
             Console.WriteLine();
         }
+
+        private static void _simpleArrays()
+        {
+            //array of int with 3 elements
+            int[] myInts = new int[3];
+
+            myInts[0] = 1;
+            myInts[1] = 4;
+            myInts[2] = 0;
+
+            foreach (int element in myInts)
+            {
+                Console.WriteLine(element);
+            }
+
+            //array of strings
+            string[] books = new string[100];
+        }
+
+        private static void _implicitTypedArrays()
+        {
+            var a = new[] { 1, 2, 6, 100 };
+            Console.WriteLine("a is a {0}", a.ToString());
+
+            var b = new[] { 1.2, 4.6, 100.3 };
+            Console.WriteLine("b is a {0}", b.ToString());
+
+            var s = new[] { "Hello", "Faie", "Too" };
+            Console.WriteLine("s is a {0}", s.ToString());
+        }
+
+        private static void _arrayOfObjects()
+        {
+            object[] myObjects = new object[3];
+
+            myObjects[0] = 4;
+            myObjects[1] = false;
+            myObjects[2] = new DateTime(2020, 11, 20);
+
+            foreach(object obj in myObjects)
+            {
+                Console.WriteLine("Type: {0}, Value: {1}", obj.GetType(), obj.ToString());
+            }
+        }
+
+        private static void _passByValue()
+        {
+            // pass by value variables
+            int x = 9;
+            int y = 1000;
+
+            Console.WriteLine("Before call, x is {0} and y is {1}", x, y);
+            Console.WriteLine("Answer with call is: {0}", Add(x, y));
+            Console.WriteLine("After call, x is {0} and y is {1}", x, y);
+        }
+
+        private static void _passByOutParameter()
+        {
+            Add(90, 90, out int ans);
+            ReturnMultipleValues(out int i, out string s, out bool b);
+
+            Console.WriteLine("90 + 90 = {0}", ans);
+            Console.WriteLine("The values are: a={0}, b={1}, c={2}", i, s, b);
+        }
+
+        private static void _passByReference()
+        {
+            string str1 = "Flip";
+            string str2 = "Flop";
+
+            Console.WriteLine("Before: {0}, {1}", str1, str2);
+            SwapStrings(ref str1, ref str2);
+            Console.WriteLine("After: {0}, {1}", str1, str2);
+        }
+
+        private static void _returnRefToLocal()
+        {
+            string[] array = { "one", "two", "three" };
+            int pos = 1;
+
+            Console.WriteLine("Before: {0}, {1}, {2}", array[0], array[1], array[2]);
+            var ouput = SimpleReturn(array, pos);
+            Console.WriteLine(ouput);
+
+            ouput = "new";
+            Console.WriteLine("After: {0}, {1}, {2}", array[0], array[1], array[2]);
+
+            Console.WriteLine();
+
+            Console.WriteLine("Before ref call: {0}, {1}, {2}", array[0], array[1], array[2]);
+            ref var output = ref ReferenceReturn(array, 2);
+
+            output = "test";
+            Console.WriteLine("After ref call: {0}, {1}, {2}", array[0], array[1], array[2]);
+        }
+
+
+        #region private functions
+
+        private static int Add(int x, int y)
+        {
+            int ans = x + y;
+
+            x = 1000;
+            y = 999;
+
+            return ans;
+        }
+
+        private static void Add(int x, int y, out int ans)
+        {
+            ans = x + y;
+        }
+
+        private static void ReturnMultipleValues(out int a, out string b, out bool c)
+        {
+            a = 9;
+            b = "Oivla!";
+            c = true;
+        }
+
+        private static void SwapStrings(ref string p1, ref string p2)
+        {
+            string temp = p1;
+            p1 = p2;
+            p2 = temp;
+        }
+
+        private static string SimpleReturn(string[] array, int position)
+        {
+            return array[position];
+        }
+
+        /// <summary>
+        /// Return the reference position
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        private static ref string ReferenceReturn(string[] array, int position)
+        {
+            return ref array[position];
+        }
+
+        #endregion
     }
 }
